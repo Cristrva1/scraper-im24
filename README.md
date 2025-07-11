@@ -39,3 +39,4 @@ cp .env.example .env      # añade PROXY_URL cuando lo compres
 docker compose build
 docker compose up
 
+# scraper-im24
