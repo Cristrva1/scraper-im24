@@ -9,7 +9,7 @@ from __future__ import annotations
 import random, time, argparse, datetime as dt
 from uuid import uuid4
 from pathlib import Path
-
+import os
 import pandas as pd
 from seleniumbase import Driver
 from selenium.webdriver.common.by import By
@@ -28,7 +28,7 @@ USER_AGENTS = [
     "Gecko/20100101 Firefox/126.0",
 ]
 RANDOM_DELAY = (2, 5)   # segundos
-MAX_PAGES    = 75
+MAX_PAGES = int(os.getenv("MAX_PAGES", 75))   # ← ahora se lee de env
 TIMEOUT      = 45
 
 # —— Driver utilitario ———————————————————————————

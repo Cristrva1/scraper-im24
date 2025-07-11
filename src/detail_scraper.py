@@ -31,11 +31,12 @@ RANDOM_DELAY = (3, 7)
 TIMEOUT      = 60
 
 def get_driver(proxy_url: str | None) -> Driver:
-    drv = Driver(uc=True, headless=False, block_images=True)
+    drv = Driver(uc=True, headless=True, block_images=True)   # headless=True
     if proxy_url:
         drv.driver.options.add_argument(f"--proxy-server={proxy_url}")
     drv.set_page_load_timeout(TIMEOUT)
     return drv
+
 
 def close_cookie(driver: Driver):
     try:

@@ -1,13 +1,33 @@
-version: "3.9"
+###############################################################################
+# docker-compose.yml · Scraper Inmuebles24
+# ─────────────────────────────────────────────────────────────────────────────
+# • Construye la imagen con tu Dockerfile y monta /data para persistir CSV/Parquet
+# • Variables de entorno clave:
+#     MAX_PAGES  → cuántas páginas baja cada listado (2 para prueba, 75 prod)
+#     ESTADO     → si se define, el contenedor procesa solo ese estado
+#     PROXY_URL  → deja vacío hasta que contrates un proxy residencial
+# • Escala fácilmente con:
+#     docker compose up --scale scraper=8 -d
+###############################################################################
+
 services:
   scraper:
     build:
       context: .
       dockerfile: docker/Dockerfile
+    # Variables que pueden vivir en .env pero aquí fijamos las críticas de test
     env_file:
-      - .env
+      - .env                 # BASE_DIR, etc. (puede faltar, no es obligatorio)
+    #command: ["python", "runner.py", "--estado", "${ESTADO}"]   #cada contenedor puede recibir un estado 
+    shm_size: "2gb"
+    environment:
+      MAX_PAGES: "3"         # ← ¡Cambiar a 75 o borrar en producción!
+      ESTADO: ""             # se sobreescribe al lanzar con  -e ESTADO="Jalisco"
+      PROXY_URL: ""          # tu proxy residencial (http://user:pass@host:port)
+      SB_FLAGS: "--disable-dev-shm-usage"   # ← flag extra para Chrome
     volumes:
-      - ./data:/data   # salida y jobs.json persisten
+      - ./data:/data         # CSV maestro, jobs.json y tmp/ persisten en host
+    # Límites suaves; docker-compose (local) los ignora pero Swarm/k3s sí
     deploy:
       resources:
         limits:

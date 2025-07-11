@@ -38,7 +38,6 @@ graph TD
 
 ## Uso rápido
 ```bash
-git clone https://github.com/tuusuario/scraper-im24.git
 cd scraper-im24
 cp .env.example .env      # añade PROXY_URL cuando lo compres
 docker compose build

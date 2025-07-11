@@ -1,3 +1,8 @@
-pandas==2.2.2
-seleniumbase==4.37.0
-pyarrow==16.1.0
+pandas==2.2.3
+beautifulsoup4>=4.12.3
+requests>=2.32.3
+selenium>=4.34.0
+seleniumbase>=4.37.2
+webdriver-manager>=4.0.1
+pyarrow==16.1.0          
+python-dotenv>=1.0.1     
