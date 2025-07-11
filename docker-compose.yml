@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  scraper:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ./data:/data   # salida y jobs.json persisten
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 3g

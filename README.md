@@ -24,13 +24,16 @@ scraper-im24/
 
 ```mermaid
 graph TD
-  subgraph Ciclo automático cada 15 dias
-    JT[job_tracker.py<br/>lee jobs.json] -->|marca pendientes| ID + metadatos[LS(listing_scraper.py<br/>Parquet .urls)]
+  subgraph "Ciclo automático cada 15 dias"
+    JT[job_tracker.py<br/>lee jobs.json] -->|marca pendientes| LS[listing_scraper.py<br/>Parquet .urls]
     LS --> DS[detail_scraper.py<br/>Parquet .details]
     DS -->|marca done| JT
     JT -->|¿todos listos?| AGG[aggregator.py<br/>fusiona Parquet -> CSV maestro]
   end
 
+  AGG -->|Crea CSV maestro| CSV(inmuebles24_YYYY-MM-DD.csv)
+  CSV -->|Sube con Rclone| GDrive(gdrive:scraper-im24)
+```
 
 
 ## Uso rápido
